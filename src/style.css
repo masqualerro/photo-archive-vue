@@ -1,3 +1,10 @@
+@import url('satoshi.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#app {
+  min-height: 100vh;
+  --tw-bg-opacity: 1;
+  background-color: rgb(3 7 18 / var(--tw-bg-opacity));
+}
