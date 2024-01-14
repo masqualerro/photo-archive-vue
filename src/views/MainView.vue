@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-full font-satoshi">
-    <header class="bg-white">
+    <header class="bg-gray-950">
       <nav
         class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -14,11 +14,11 @@
               alt=""
             />
           </a>
-          <div>
+          <div class="items-center justify-center hidden lg:flex">
             <select
               id="location"
               name="location"
-              class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-800 dark:focus:ring-indigo-500 [&_*]:text-black"
             >
               <option>Standard</option>
               <option selected="">Grayscale</option>
@@ -30,7 +30,7 @@
         <div class="flex lg:hidden">
           <button
             type="button"
-            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
             @click="mobileMenuOpen = true"
           >
             <span class="sr-only">Open main menu</span>
@@ -40,8 +40,9 @@
         <PopoverGroup class="hidden lg:flex lg:gap-x-12">
           <Popover class="relative">
             <PopoverButton
-              class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900"
+              class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 dark:text-white"
             >
+              <GlobeAmericasIcon class="h-5 w-5 flex-none text-gray-400 mr-2" aria-hidden="true" />
               Portugal <span aria-hidden="true">&rarr;</span> Obidos
               <ChevronDownIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
@@ -55,29 +56,32 @@
               leave-to-class="opacity-0 translate-y-1"
             >
               <PopoverPanel
-                class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5"
+                class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white dark:bg-gray-950 shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-800"
               >
                 <div class="p-4">
                   <div
                     v-for="item in products"
                     :key="item.name"
-                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 dark:hover:bg-gray-800"
                   >
                     <div
-                      class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
+                      class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-900 dark:group-hover:bg-gray-950"
                     >
                       <component
                         :is="item.icon"
-                        class="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                        class="h-6 w-6 text-gray-600 dark:text-gray-300 group-hover:text-indigo-600"
                         aria-hidden="true"
                       />
                     </div>
                     <div class="flex-auto">
-                      <a :href="item.href" class="block font-semibold text-gray-900">
+                      <a
+                        :href="item.href"
+                        class="block font-semibold text-gray-900 dark:text-white"
+                      >
                         {{ item.name }}
                         <span class="absolute inset-0" />
                       </a>
-                      <p class="mt-1 text-gray-600">{{ item.description }}</p>
+                      <p class="mt-1 text-gray-600 dark:text-gray-400">{{ item.description }}</p>
                     </div>
                   </div>
                 </div>
@@ -86,7 +90,7 @@
                     v-for="item in callsToAction"
                     :key="item.name"
                     :href="item.href"
-                    class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                    class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
                   >
                     <component
                       :is="item.icon"
@@ -99,8 +103,12 @@
               </PopoverPanel>
             </transition>
           </Popover>
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Locations</a>
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Collections</a>
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white"
+            >Locations</a
+          >
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white"
+            >Collections</a
+          >
         </PopoverGroup>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           <div class="flex items-center gap-x-3">
@@ -121,7 +129,7 @@
       <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
         <div class="fixed inset-0 z-10" />
         <DialogPanel
-          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white dark:bg-gray-950 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:sm:ring-white/10"
         >
           <div class="flex items-center justify-between">
             <a href="#" class="-m-1.5 p-1.5">
@@ -134,7 +142,7 @@
             </a>
             <button
               type="button"
-              class="-m-2.5 rounded-md p-2.5 text-gray-700"
+              class="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-400"
               @click="mobileMenuOpen = false"
             >
               <span class="sr-only">Close menu</span>
@@ -142,13 +150,13 @@
             </button>
           </div>
           <div class="mt-6 flow-root">
-            <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-500/25">
               <div class="space-y-2 py-6">
                 <Disclosure as="div" class="-mx-3" v-slot="{ open }">
                   <DisclosureButton
-                    class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                   >
-                    Product
+                    Portugal <span aria-hidden="true">&rarr;</span> Obidos
                     <ChevronDownIcon
                       :class="[open ? 'rotate-180' : '', 'h-5 w-5 flex-none']"
                       aria-hidden="true"
@@ -160,40 +168,54 @@
                       :key="item.name"
                       as="a"
                       :href="item.href"
-                      class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                       >{{ item.name }}</DisclosureButton
                     >
                   </DisclosurePanel>
                 </Disclosure>
                 <a
                   href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >Features</a
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
+                  >Locations</a
                 >
                 <a
                   href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >Marketplace</a
-                >
-                <a
-                  href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >Company</a
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
+                  >Collections</a
                 >
               </div>
-              <div class="py-6">
-                <a
-                  href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >Log in</a
-                >
+              <div class="py-6 flex justify-between items-center">
+                <div class="flex items-center gap-x-3">
+                  <button
+                    class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
+                  >
+                    <SunIcon class="h-6 w-6 text-indigo-400 hover:fill-indigo-400" />
+                  </button>
+
+                  <button
+                    class="rounded-full p-1 bg-indigo-900 hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
+                  >
+                    <MoonIcon class="h-6 w-6 text-indigo-400 fill-indigo-400" />
+                  </button>
+                </div>
+                <div class="flex items-center justify-center">
+                  <select
+                    id="location"
+                    name="location"
+                    class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-800 dark:focus:ring-indigo-500 [&_*]:text-black"
+                  >
+                    <option>Standard</option>
+                    <option selected="">Grayscale</option>
+                    <option>Inverted</option>
+                    <option>Hue Rotate</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </DialogPanel>
       </Dialog>
     </header>
-
     <main>
       <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
         <RouterView />
@@ -217,22 +239,25 @@ import {
 import {
   ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
   CursorArrowRaysIcon,
   FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
   SunIcon,
-  MoonIcon
+  MoonIcon,
+  GlobeAmericasIcon,
+  GlobeEuropeAfricaIcon,
+  GlobeAltIcon,
+  XCircleIcon
 } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 const products = [
   {
     name: 'Analytics',
     description: 'Get a better understanding of your traffic',
     href: '#',
-    icon: ChartPieIcon
+    icon: GlobeAmericasIcon
   },
   {
     name: 'Engagement',
@@ -260,8 +285,8 @@ const products = [
   }
 ]
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon }
+  { name: 'Cancel', href: '#', icon: XCircleIcon },
+  { name: 'Go', href: '#', icon: GlobeAltIcon }
 ]
 
 const mobileMenuOpen = ref(false)
