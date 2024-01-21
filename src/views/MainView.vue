@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-full font-satoshi">
-    <header class="bg-gray-950">
+  <div class="min-h-full font-satoshi flex flex-col h-screen bg-stone-400 dark:bg-gray-950">
+    <header class="dark:bg-gray-950">
       <nav
         class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -8,11 +8,8 @@
         <div class="flex lg:flex-1 items-center gap-x-4">
           <a href="#" class="-m-1.5 p-1.5">
             <span class="sr-only">Your Company</span>
-            <img
-              class="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
-            />
+            <img v-if="isDark" class="h-8 w-auto" src="/glyph.svg" alt="Your Company" />
+            <img v-else class="h-8 w-auto" src="/glyph-light.svg" alt="Your Company" />
           </a>
           <div class="items-center justify-center hidden lg:flex">
             <select
@@ -42,8 +39,12 @@
             <PopoverButton
               class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 dark:text-white"
             >
-              <GlobeAmericasIcon class="h-5 w-5 flex-none text-gray-400 mr-2" aria-hidden="true" />
-              Portugal <span aria-hidden="true">&rarr;</span> Obidos
+              <component
+                :is="location.icon"
+                class="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-indigo-600 mr-2"
+                aria-hidden="true"
+              />
+              {{ location.name }} <span aria-hidden="true">&rarr;</span> {{ child.name }}
               <ChevronDownIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
 
@@ -111,19 +112,7 @@
           >
         </PopoverGroup>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <div class="flex items-center gap-x-3">
-            <button
-              class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
-            >
-              <SunIcon class="h-6 w-6 text-indigo-400 hover:fill-indigo-400" />
-            </button>
-
-            <button
-              class="rounded-full p-1 bg-indigo-900 hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
-            >
-              <MoonIcon class="h-6 w-6 text-indigo-400 fill-indigo-400" />
-            </button>
-          </div>
+          <DarkModeGroup />
         </div>
       </nav>
       <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
@@ -185,19 +174,7 @@
                 >
               </div>
               <div class="py-6 flex justify-between items-center">
-                <div class="flex items-center gap-x-3">
-                  <button
-                    class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
-                  >
-                    <SunIcon class="h-6 w-6 text-indigo-400 hover:fill-indigo-400" />
-                  </button>
-
-                  <button
-                    class="rounded-full p-1 bg-indigo-900 hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
-                  >
-                    <MoonIcon class="h-6 w-6 text-indigo-400 fill-indigo-400" />
-                  </button>
-                </div>
+                <DarkModeGroup />
                 <div class="flex items-center justify-center">
                   <select
                     id="location"
@@ -217,14 +194,18 @@
       </Dialog>
     </header>
     <main>
-      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-        <RouterView />
+      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 dark:bg-gray-950 relative">
+        <RouterView :collection="child" :location="location.folder" />
       </div>
     </main>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import DarkModeGroup from '@/components/DarkModeGroup.vue'
+import { useDark } from '@vueuse/core'
+import {} from 'vue-router'
+import locations from '@/data/LocationData'
+import { ref, onBeforeMount } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -243,14 +224,27 @@ import {
   FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
-  SunIcon,
-  MoonIcon,
   GlobeAmericasIcon,
-  GlobeEuropeAfricaIcon,
   GlobeAltIcon,
   XCircleIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { RouterView, useRoute } from 'vue-router'
+
+const location = ref(null)
+const child = ref(null)
+const route = useRoute()
+const isDark = useDark()
+
+const locationId = ref(Number(route.params.locationId))
+const collectionId = ref(Number(route.params.collectionId))
+
+onBeforeMount(() => {
+  location.value = locations.find((location) => location.id === locationId.value)
+  child.value = location.value.children.find((child) => child.id === collectionId.value)
+  console.log(location.value)
+  console.log(child.value)
+})
 
 const products = [
   {

@@ -1,60 +1,53 @@
 <template>
   <div
-    class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:pb-0 lg:pt-0 lg:flex lg:px-8 min-h-screen items-center font-satoshi"
+    class="bg-stone-300 dark:bg-gray-950 mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:pb-0 lg:pt-0 lg:flex lg:px-8 min-h-screen items-center font-satoshi"
   >
     <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
-      <img class="h-12" src="/glyph.svg" alt="Your Company" />
+      <img v-if="isDark" class="h-12" src="/glyph.svg" alt="Your Company" />
+      <img v-else class="h-12" src="/glyph-light.svg" alt="Your Company" />
       <div class="mt-24 sm:mt-32 lg:mt-16">
         <a href="#" class="inline-flex space-x-6">
           <span
-            class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold leading-6 text-indigo-400 ring-1 ring-inset ring-indigo-500/20"
+            class="rounded-full bg-stone-900/10 dark:bg-indigo-500/10 px-3 py-1 text-xs font-semibold leading-6 text-stone-800 dark:text-indigo-400 ring-1 ring-inset ring-stone-900/20 dark:ring-indigo-500/20"
             >Standard</span
           >
           <span
-            class="inline-flex items-center space-x-2 text-xs font-medium leading-6 text-gray-300"
+            class="inline-flex items-center space-x-2 text-xs font-medium leading-6 text-gray-800 dark:text-gray-300"
           >
             Grayscale
           </span>
           <span
-            class="inline-flex items-center space-x-2 text-xs font-medium leading-6 text-gray-300"
+            class="inline-flex items-center space-x-2 text-xs font-medium leading-6 text-gray-800 dark:text-gray-300"
           >
             Inverted
           </span>
           <span
-            class="inline-flex items-center space-x-2 text-xs font-medium leading-6 text-gray-300"
+            class="inline-flex items-center space-x-2 text-xs font-medium leading-6 text-gray-800 dark:text-gray-300"
           >
             Hue Rotate
           </span>
         </a>
       </div>
-      <h1 class="mt-10 text-4xl font-regular tracking-tight text-white sm:text-8xl">
+      <h1 class="mt-10 text-4xl font-regular tracking-tight dark:text-white sm:text-8xl">
         Miguel <br />
         Sedillo
       </h1>
-      <ArrowDownRightIcon class="h-8 w-8 text-indigo-400 mt-4" />
-      <p class="mt-6 text-lg leading-8 text-gray-300">Photographic Archive</p>
+      <ArrowDownRightIcon class="h-10 w-10 text-stone-800 dark:text-indigo-400 mt-4" />
+      <p class="mt-6 text-lg leading-8 text-gray-800 dark:text-gray-300">Photographic Archive</p>
       <div class="mt-10 flex justify-between">
         <div class="flex items-center gap-x-6">
-          <a href="#" class="text-sm font-medium leading-6 text-indigo-400 hover:text-indigo-300"
+          <a
+            href="#"
+            class="text-sm font-medium leading-6 text-indigo-700 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
             >Locations</a
           >
-          <a href="#" class="text-sm font-medium leading-6 text-indigo-400 hover:text-indigo-300"
+          <a
+            href="#"
+            class="text-sm font-medium leading-6 text-indigo-700 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
             >Collections</a
           >
         </div>
-        <div class="flex items-center gap-x-3">
-          <button
-            class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
-          >
-            <SunIcon class="h-6 w-6 text-indigo-400 hover:fill-indigo-400" />
-          </button>
-
-          <button
-            class="rounded-full p-1 bg-indigo-900 hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
-          >
-            <MoonIcon class="h-6 w-6 text-indigo-400 fill-indigo-400" />
-          </button>
-        </div>
+        <DarkModeGroup />
       </div>
     </div>
     <ul
@@ -88,17 +81,11 @@
     transform: scale(1);
   }
 }
-
-/* .object-cover {
-  transition: transform 300ms ease;
-}
-
-.object-cover:hover {
-  animation: elastic 300ms;
-} */
 </style>
 <script>
-import { ArrowDownRightIcon, SunIcon, MoonIcon } from '@heroicons/vue/24/outline'
+import { ArrowDownRightIcon } from '@heroicons/vue/24/outline'
+import { useDark } from '@vueuse/core'
+import DarkModeGroup from '@/components/DarkModeGroup.vue'
 
 export default {
   name: 'HomeView',
@@ -140,8 +127,11 @@ export default {
   },
   components: {
     ArrowDownRightIcon,
-    SunIcon,
-    MoonIcon
+    DarkModeGroup
+  },
+  setup() {
+    const isDark = useDark()
+    return { isDark }
   }
 }
 </script>

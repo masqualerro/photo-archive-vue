@@ -24,7 +24,7 @@ const router = createRouter({
       component: () => import('../views/MainView.vue'),
       children: [
         {
-          path: '/collection/:locationId/:collectionId',
+          path: 'collection/:locationId/:collectionId',
           name: 'collection',
           component: CollectionDisplayVue
         }

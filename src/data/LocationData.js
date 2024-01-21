@@ -1,8 +1,9 @@
-import { GlobeAmericasIcon, GlobeEuropeAfricaIcon } from '@heroicons/vue/24/outline'
+import { GlobeAmericasIcon, GlobeEuropeAfricaIcon } from '@heroicons/vue/24/solid'
 const locations = [
   {
     id: 1,
     name: 'California',
+    folder: 'us',
     children: [
       {
         id: 1,
@@ -25,6 +26,7 @@ const locations = [
   {
     id: 2,
     name: 'UK',
+    folder: 'uk',
     children: [
       {
         id: 1,
@@ -52,6 +54,7 @@ const locations = [
   {
     id: 3,
     name: 'Italy',
+    folder: 'italy',
     children: [
       {
         id: 1,
@@ -99,6 +102,7 @@ const locations = [
   {
     id: 4,
     name: 'Portugal',
+    folder: 'portugal',
     children: [
       {
         id: 1,
