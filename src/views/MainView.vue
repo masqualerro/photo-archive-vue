@@ -7,20 +7,23 @@
       >
         <div class="flex lg:flex-1 items-center gap-x-4">
           <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
-            <img v-if="isDark" class="h-8 w-auto" src="/glyph.svg" alt="Your Company" />
-            <img v-else class="h-8 w-auto" src="/glyph-light.svg" alt="Your Company" />
+            <RouterLink :to="{ name: 'home' }">
+              <span class="sr-only">Driftboy Star Glyph</span>
+              <img v-if="isDark" class="h-8 w-auto" src="/glyph.svg" alt="White Star Glyph" />
+              <img v-else class="h-8 w-auto" src="/glyph-light.svg" alt="Dark Star Glyph" />
+            </RouterLink>
           </a>
           <div class="items-center justify-center hidden lg:flex">
             <select
+              v-model="filter"
               id="location"
               name="location"
               class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-800 dark:focus:ring-indigo-500 [&_*]:text-black"
             >
-              <option>Standard</option>
-              <option selected="">Grayscale</option>
-              <option>Inverted</option>
-              <option>Hue Rotate</option>
+              <option value="none">Standard</option>
+              <option value="grayscale(100%)">Grayscale</option>
+              <option value="invert(100%)">Inverted</option>
+              <option value="hue-rotate(200deg)">Hue Rotate</option>
             </select>
           </div>
         </div>
@@ -194,8 +197,8 @@
       </Dialog>
     </header>
     <main>
-      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 dark:bg-gray-950 relative">
-        <RouterView :collection="child" :location="location.folder" />
+      <div class="mx-auto max-w-7xl py-6 px-5 lg:px-8 dark:bg-gray-950 relative">
+        <RouterView :collection="child" :location="location.folder" :filter="filter" />
       </div>
     </main>
   </div>
@@ -235,6 +238,7 @@ const location = ref(null)
 const child = ref(null)
 const route = useRoute()
 const isDark = useDark()
+const filter = ref('none')
 
 const locationId = ref(Number(route.params.locationId))
 const collectionId = ref(Number(route.params.collectionId))

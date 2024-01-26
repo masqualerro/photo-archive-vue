@@ -1,7 +1,6 @@
 <template>
   <div class="font-satoshi">
-    <h1 class="text-white text-6xl font-semibold">{{ collection.name }}</h1>
-
+    <h1 class="text-white text-6xl font-semibold ml-0 pl-0">{{ collection.name }}</h1>
     <div class="mt-5">
       <div class="overflow-hidden h-[580px] relative">
         <ul
@@ -9,40 +8,71 @@
           @scroll="handleScroll"
           class="flex overflow-x-auto snap-x snap-mandatory h-[620px]"
         >
-          <li v-for="image in data" :key="image.id" class="snap-start snap-always mr-2 last:mr-0">
+          <li v-for="image in data" :key="image.id" class="snap-start snap-always mr-8 last:mr-0">
             <div
               style="will-change: transform"
-              class="slide-center h-full relative bg-carouselradial w-[400px] shrink-0 text-white px-2 flex flex-col justify-between items-center"
+              class="h-full relative w-[384px] flex flex-col justify-between items-center"
             >
               <img
+                :style="{ filter: filter, willChange: 'filter' }"
                 :src="image.src"
                 :alt="image.alt"
-                class="object-cover mx-auto h-[580px] flex-shrink-0 bg-[#0E0E0E52]"
+                class="object-cover h-[580px] transition-filter duration-300 ease-in-out"
                 height="580"
                 width="384"
               />
             </div>
           </li>
         </ul>
-        <button
-          @click="goToPreviousSlide"
-          class="hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 absolute left-0 bottom-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-          :class="{ 'opacity-0': currentSlide === 0 }"
-          :disabled="currentSlide === 0"
-        >
-          <span class="sr-only">Previous</span>
-          <ChevronLeftIcon class="h-5 w-5 text-white" aria-hidden="true" />
-        </button>
-        <button
-          v-if="!scrolledToEndOfSlider"
-          @click="goToNextSlide"
-          class="hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 absolute right-0 bottom-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-        >
-          <span class="sr-only">Next</span>
-          <ChevronRightIcon class="h-5 w-5 text-white" aria-hidden="true" />
-        </button>
       </div>
+      <!-- <button
+        :style="{ bottom: 'calc(50% - 60px)' }"
+        @click="goToPreviousSlide"
+        class="hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 absolute left-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+        :class="{ 'opacity-0': currentSlide === 0 }"
+        :disabled="currentSlide === 0"
+      >
+        <span class="sr-only">Previous</span>
+        <ChevronLeftIcon class="h-5 w-5 text-white" aria-hidden="true" />
+      </button>
+      <button
+        :style="{ bottom: 'calc(50% - 60px)' }"
+        v-if="!scrolledToEndOfSlider"
+        @click="goToNextSlide"
+        class="hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 absolute right-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+      >
+        <span class="sr-only">Next</span>
+        <ChevronRightIcon class="h-5 w-5 text-white" aria-hidden="true" />
+      </button> -->
     </div>
+  </div>
+  <div class="flex items-center justify-center mt-6">
+    <button
+      :style="{ bottom: 'calc(50% - 60px)' }"
+      @click="goToPreviousSlide"
+      class="disabled:cursor-not-allowed hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 left-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+      :disabled="currentSlide === 0"
+    >
+      <span class="sr-only">Previous</span>
+      <ChevronLeftIcon
+        :class="{ ' text-zinc-400': currentSlide === 0 }"
+        class="h-5 w-5 text-white"
+        aria-hidden="true"
+      />
+    </button>
+    <button
+      :style="{ bottom: 'calc(50% - 60px)' }"
+      :disabled="scrolledToEndOfSlider"
+      @click="goToNextSlide"
+      class="hover:scale-105 disabled:cursor-not-allowed hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 right-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+    >
+      <span class="sr-only">Next</span>
+      <ChevronRightIcon
+        :class="{ ' text-zinc-400': scrolledToEndOfSlider }"
+        class="h-5 w-5 text-white"
+        aria-hidden="true"
+      />
+    </button>
   </div>
 </template>
 <script>
@@ -68,11 +98,15 @@ export default {
     location: {
       type: String,
       required: true
+    },
+    filter: {
+      type: String,
+      required: true
     }
   },
   setup() {
-    const slideWidth = 400
-    const slideMargin = 8
+    const slideWidth = 384
+    const slideMargin = 32
     const sliderRef = ref(null)
     const sliderPosition = ref(0)
 
