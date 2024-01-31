@@ -1,91 +1,77 @@
 <template>
   <div class="font-satoshi">
-    <h1 class="text-white text-6xl font-semibold ml-0 pl-0">{{ collection.name }}</h1>
-    <div class="mt-5">
-      <div class="overflow-hidden h-[580px] relative">
-        <ul
-          ref="sliderRef"
-          @scroll="handleScroll"
-          class="flex overflow-x-auto snap-x snap-mandatory h-[620px]"
-        >
-          <li v-for="image in data" :key="image.id" class="snap-start snap-always mr-8 last:mr-0">
-            <div
-              style="will-change: transform"
-              class="h-full relative w-[384px] flex flex-col justify-between items-center"
+    <div class="flex justify-between items-end">
+      <h1 class="dark:text-white text-6xl ml-0 pl-0">
+        {{ collection.name }}
+      </h1>
+    </div>
+    <div class="relative h-[557.844px] sm:h-[620px]">
+      <div class="absolute w-full">
+        <div class="mt-5 h-[517.844px] sm:h-[580px]">
+          <div class="overflow-hidden h-[517.844px] sm:h-[580px] relative">
+            <ul
+              ref="sliderRef"
+              @scroll="handleScroll"
+              class="flex overflow-x-auto snap-x snap-mandatory h-[557.844px] sm:h-[620px]"
             >
-              <img
-                :style="{ filter: filter, willChange: 'filter' }"
-                :src="image.src"
-                :alt="image.alt"
-                class="object-cover h-[580px] transition-filter duration-300 ease-in-out"
-                height="580"
-                width="384"
-              />
-            </div>
-          </li>
-        </ul>
+              <li
+                v-for="image in data"
+                :key="image.id"
+                class="snap-start snap-always mr-4 sm:mr-6 last:mr-0"
+              >
+                <div
+                  style="will-change: transform"
+                  class="h-full relative w-[350px] sm:w-[384px] flex flex-col justify-between items-center"
+                >
+                  <img
+                    :style="{ filter: filter, willChange: 'filter' }"
+                    :src="image.src"
+                    :alt="image.alt"
+                    class="object-cover w-[350px] h-[517.844px] sm:w-[384px] sm:h-[580px] transition-filter duration-300 ease-in-out"
+                  />
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <!-- <button
-        :style="{ bottom: 'calc(50% - 60px)' }"
-        @click="goToPreviousSlide"
-        class="hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 absolute left-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-        :class="{ 'opacity-0': currentSlide === 0 }"
-        :disabled="currentSlide === 0"
-      >
-        <span class="sr-only">Previous</span>
-        <ChevronLeftIcon class="h-5 w-5 text-white" aria-hidden="true" />
-      </button>
-      <button
-        :style="{ bottom: 'calc(50% - 60px)' }"
-        v-if="!scrolledToEndOfSlider"
-        @click="goToNextSlide"
-        class="hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 absolute right-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-      >
-        <span class="sr-only">Next</span>
-        <ChevronRightIcon class="h-5 w-5 text-white" aria-hidden="true" />
-      </button> -->
+      <div class="flex items-end justify-center mt-6 absolute bottom-[-25px] w-full">
+        <button
+          @click="goToPreviousSlide"
+          class="disabled:cursor-not-allowed hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 w-10 h-10 rounded-full flex items-center justify-center"
+          :disabled="currentSlide === 0"
+        >
+          <span class="sr-only">Previous</span>
+          <ChevronLeftIcon
+            :class="{ 'text-black/30 dark:text-white/30': currentSlide === 0 }"
+            class="h-5 w-5 text-black dark:text-white"
+            aria-hidden="true"
+          />
+        </button>
+        <button
+          :disabled="scrolledToEndOfSlider"
+          @click="goToNextSlide"
+          class="hover:scale-105 disabled:cursor-not-allowed hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 w-10 h-10 rounded-full flex items-center justify-center"
+        >
+          <span class="sr-only">Next</span>
+          <ChevronRightIcon
+            :class="{ 'text-black/30 dark:text-white/30': scrolledToEndOfSlider }"
+            class="h-5 w-5 text-black dark:text-white"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
     </div>
   </div>
-  <div class="flex items-center justify-center mt-6">
-    <button
-      :style="{ bottom: 'calc(50% - 60px)' }"
-      @click="goToPreviousSlide"
-      class="disabled:cursor-not-allowed hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 left-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-      :disabled="currentSlide === 0"
-    >
-      <span class="sr-only">Previous</span>
-      <ChevronLeftIcon
-        :class="{ ' text-zinc-400': currentSlide === 0 }"
-        class="h-5 w-5 text-white"
-        aria-hidden="true"
-      />
-    </button>
-    <button
-      :style="{ bottom: 'calc(50% - 60px)' }"
-      :disabled="scrolledToEndOfSlider"
-      @click="goToNextSlide"
-      class="hover:scale-105 disabled:cursor-not-allowed hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 right-0 transform -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
-    >
-      <span class="sr-only">Next</span>
-      <ChevronRightIcon
-        :class="{ ' text-zinc-400': scrolledToEndOfSlider }"
-        class="h-5 w-5 text-white"
-        aria-hidden="true"
-      />
-    </button>
-  </div>
 </template>
+<style scoped></style>
 <script>
 import CollectionData from '@/data/CollectionData.json'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/24/outline'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, toRefs, onMounted, onUnmounted } from 'vue'
+
 export default {
   name: 'CollectionDisplay',
-  data() {
-    return {
-      data: []
-    }
-  },
   components: {
     ChevronRightIcon,
     ChevronLeftIcon
@@ -104,11 +90,39 @@ export default {
       required: true
     }
   },
-  setup() {
-    const slideWidth = 384
-    const slideMargin = 32
+  setup(props) {
+    const data = ref([])
+    const { collection, location } = toRefs(props)
+
+    const slideWidth = ref(384)
+    const slideMargin = ref(24)
     const sliderRef = ref(null)
     const sliderPosition = ref(0)
+
+    if (window.innerWidth < 640) {
+      slideWidth.value = 350
+      slideMargin.value = 16
+    }
+
+    const updateSlideDimensions = () => {
+      if (window.innerWidth < 640) {
+        slideWidth.value = 350
+        slideMargin.value = 16
+      } else {
+        slideWidth.value = 384
+        slideMargin.value = 24
+      }
+    }
+
+    onMounted(() => {
+      window.addEventListener('resize', updateSlideDimensions)
+      // Call once to set the initial values
+      updateSlideDimensions()
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', updateSlideDimensions)
+    })
 
     const handleScroll = () => {
       if (sliderRef.value) {
@@ -120,13 +134,14 @@ export default {
       const slider = sliderRef.value
       if (!slider) return
       slider.scrollTo({
-        left: slideIndex * (slideWidth + slideMargin),
+        left: slideIndex * (slideWidth.value + slideMargin.value),
         behavior: 'smooth'
       })
+      console.log('scrollToSlide')
     }
 
     const currentSlide = computed(() => {
-      return Math.floor(sliderPosition.value / (slideWidth + slideMargin))
+      return Math.floor(sliderPosition.value / (slideWidth.value + slideMargin.value))
     })
 
     let scrolledToEndOfSlider = ref(false)
@@ -145,6 +160,31 @@ export default {
       scrollToSlide(currentSlide.value - 1)
     }
 
+    const isShowing = ref(true)
+
+    watch(
+      collection,
+      () => {
+        data.value = []
+        const collectionData = CollectionData.find(
+          (collectionItem) => collectionItem.title === collection.value.name
+        )
+        for (let i = 0; i < collectionData.length; i++) {
+          data.value.push({
+            id: i,
+            src: `/assets/${location.value}/${collectionData.folder}/${i}.jpg`,
+            alt: `${collectionData.title} ${i}`
+          })
+        }
+        if (sliderRef.value) {
+          sliderRef.value.scrollLeft = 0
+        }
+        sliderPosition.value = 0
+        scrolledToEndOfSlider.value = false
+      },
+      { immediate: true }
+    )
+
     return {
       sliderRef,
       sliderPosition,
@@ -152,23 +192,10 @@ export default {
       scrolledToEndOfSlider,
       goToNextSlide,
       goToPreviousSlide,
-      handleScroll
+      handleScroll,
+      data,
+      isShowing
     }
-  },
-  created() {
-    const collection = CollectionData.find(
-      (collection) => collection.title === this.collection.name
-    )
-    console.log(collection)
-    console.log(collection)
-    for (let i = 0; i < collection.length; i++) {
-      this.data.push({
-        id: i,
-        src: `/assets/${this.location}/${collection.folder}/${i}.jpg`,
-        alt: `${collection.title} ${i}`
-      })
-    }
-    console.log(this.data)
   }
 }
 </script>

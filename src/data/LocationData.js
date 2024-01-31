@@ -8,17 +8,20 @@ const locations = [
       {
         id: 1,
         name: 'Greenhouse',
-        route: '/greenhouse'
+        folder: 'greenhouse',
+        length: 8
       },
       {
         id: 2,
         name: 'Mendocino',
-        route: '/mendocino'
+        folder: 'mendo',
+        length: 8
       },
       {
         id: 3,
         name: 'Warehouse',
-        route: '/warehouse'
+        folder: 'warehouse',
+        length: 9
       }
     ],
     icon: GlobeAmericasIcon
@@ -31,22 +34,26 @@ const locations = [
       {
         id: 1,
         name: 'London',
-        route: '/london'
+        folder: 'london',
+        length: 7
       },
       {
         id: 2,
         name: 'Canal',
-        route: '/canal'
+        folder: 'canal',
+        length: 5
       },
       {
         id: 3,
         name: 'Kew Gardens',
-        route: '/kew-gardens'
+        folder: 'kewgardens',
+        length: 13
       },
       {
         id: 4,
         name: 'Interiors',
-        route: '/interiors'
+        folder: 'interiors',
+        length: 8
       }
     ],
     icon: GlobeEuropeAfricaIcon
@@ -59,42 +66,50 @@ const locations = [
       {
         id: 1,
         name: 'Roma',
-        route: '/roma'
+        folder: 'roma',
+        length: 7
       },
       {
         id: 2,
         name: 'Pompeii',
-        route: '/pompeii'
+        folder: 'pompeii',
+        length: 5
       },
       {
         id: 3,
         name: 'Florence',
-        route: '/florence'
+        folder: 'florence',
+        length: 5
       },
       {
         id: 4,
         name: 'Ruins',
-        route: '/ruins'
+        folder: 'ruins',
+        length: 5
       },
       {
         id: 5,
         name: 'Vatican City',
-        route: '/vatican-city'
+        folder: 'vaticancity',
+        length: 5
       },
       {
         id: 6,
         name: 'Sorrento',
-        route: '/sorrento'
+        folder: 'sorrento',
+        length: 11
       },
       {
         id: 7,
         name: 'Positano',
-        route: '/positano'
+        folder: 'positano',
+        length: 7
       },
       {
         id: 8,
         name: 'Excursions',
-        route: '/excursions'
+        folder: 'excursions',
+        length: 7
       }
     ],
     icon: GlobeEuropeAfricaIcon
@@ -107,27 +122,32 @@ const locations = [
       {
         id: 1,
         name: 'Lisboa',
-        route: '/lisboa'
+        folder: 'lisboa',
+        length: 7
       },
       {
         id: 2,
         name: 'Porto',
-        route: '/porto'
+        folder: 'porto',
+        length: 6
       },
       {
         id: 3,
         name: 'Obidos',
-        route: '/obidos'
+        folder: 'obidos',
+        length: 6
       },
       {
         id: 4,
         name: 'Coimbra',
-        route: '/coimbra'
+        folder: 'coimbra',
+        length: 4
       },
       {
         id: 5,
         name: 'Bom Jesus',
-        route: '/bom-jesus'
+        folder: 'bomjesus',
+        length: 6
       }
     ],
     icon: GlobeEuropeAfricaIcon

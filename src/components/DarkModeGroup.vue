@@ -6,19 +6,19 @@
       class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
     >
       <SunIcon
-        :class="isDark ? 'text-indigo-400 hover:fill-indigo-400 ' : 'text-stone-800 fill-stone-800'"
+        :class="isDark ? 'text-white hover:fill-white ' : 'text-stone-800 fill-stone-800'"
         class="h-6 w-6"
       />
     </button>
 
     <button
       @click="enableDarkMode"
-      :class="isDark ? 'rounded-full p-1 bg-indigo-900 ' : ''"
+      :class="isDark ? 'rounded-full p-1 bg-white/20 ' : ''"
       class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
     >
       <MoonIcon
-        :class="isDark ? ' fill-indigo-400 text-indigo-400' : 'text-stone-800 hover:fill-stone-800'"
-        class="h-6 w-6 text-indigo-400 hover:fill-indigo-400"
+        :class="isDark ? ' fill-white text-white' : 'text-stone-800 hover:fill-stone-800'"
+        class="h-6 w-6"
       />
     </button>
   </div>

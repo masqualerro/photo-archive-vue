@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-full font-satoshi flex flex-col h-screen bg-stone-400 dark:bg-gray-950">
+  <div class="min-h-full font-satoshi bg-stone-400 dark:bg-gray-950">
     <header class="dark:bg-gray-950">
       <nav
-        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        class="mx-auto flex max-w-7xl items-center justify-between p-5 lg:px-8"
         aria-label="Global"
       >
         <div class="flex lg:flex-1 items-center gap-x-4">
@@ -50,7 +50,6 @@
               {{ location.name }} <span aria-hidden="true">&rarr;</span> {{ child.name }}
               <ChevronDownIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
-
             <transition
               enter-active-class="transition ease-out duration-200"
               enter-from-class="opacity-0 translate-y-1"
@@ -62,47 +61,213 @@
               <PopoverPanel
                 class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white dark:bg-gray-950 shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-800"
               >
-                <div class="p-4">
-                  <div
-                    v-for="item in products"
-                    :key="item.name"
-                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 dark:hover:bg-gray-800"
+                <Disclosure as="div" class="-mx-3 pt-4 px-4" v-slot="{ open }">
+                  <DisclosureButton
+                    class="group relative flex items-center justify-between gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 dark:hover:bg-gray-800 w-full"
                   >
                     <div
                       class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-900 dark:group-hover:bg-gray-950"
                     >
                       <component
-                        :is="item.icon"
+                        :is="GlobeAmericasIcon"
                         class="h-6 w-6 text-gray-600 dark:text-gray-300 group-hover:text-indigo-600"
                         aria-hidden="true"
                       />
                     </div>
-                    <div class="flex-auto">
-                      <a
-                        :href="item.href"
-                        class="block font-semibold text-gray-900 dark:text-white"
-                      >
-                        {{ item.name }}
+                    <div class="flex-auto text-left">
+                      <a class="block font-semibold text-gray-900 dark:text-white">
+                        {{ selectedLocation.name }}
                         <span class="absolute inset-0" />
                       </a>
-                      <p class="mt-1 text-gray-600 dark:text-gray-400">{{ item.description }}</p>
                     </div>
-                  </div>
-                </div>
-                <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  <a
-                    v-for="item in callsToAction"
-                    :key="item.name"
-                    :href="item.href"
-                    class="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
+                    <div>
+                      <ChevronDownIcon
+                        :class="[
+                          open ? 'rotate-180' : '',
+                          'h-5 w-5 flex-none text-black dark:text-white'
+                        ]"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </DisclosureButton>
+                  <DisclosurePanel class="mt-2">
+                    <RadioGroup v-model="selectedLocation">
+                      <RadioGroupLabel class="sr-only">Location</RadioGroupLabel>
+                      <div class="">
+                        <RadioGroupOption
+                          as="template"
+                          class="pl-6 pr-3"
+                          v-for="location in locations"
+                          :key="location.id"
+                          :value="location"
+                          v-slot="{ active, checked }"
+                        >
+                          <DisclosureButton
+                            as="div"
+                            :class="[
+                              active ? 'ring-2 dark:ring-indigo-600 ' : '',
+                              checked
+                                ? 'bg-sky-900/75 text-white dark:bg-gray-800 '
+                                : 'bg-white dark:bg-transparent dark:ring-white text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+                            ]"
+                            class="relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none"
+                          >
+                            <div class="flex w-full items-center justify-between">
+                              <div class="flex items-center">
+                                <div class="text-sm">
+                                  <RadioGroupLabel
+                                    as="p"
+                                    :class="
+                                      checked ? 'dark:text-white' : 'text-gray-900 dark:text-white'
+                                    "
+                                    class="font-medium"
+                                  >
+                                    {{ location.name }}
+                                  </RadioGroupLabel>
+                                  <RadioGroupDescription
+                                    as="span"
+                                    :class="checked ? '' : 'text-gray-500'"
+                                    class="inline"
+                                  >
+                                    <span> {{ location.children.length + ' collections' }} </span>
+                                  </RadioGroupDescription>
+                                </div>
+                              </div>
+                              <div v-show="checked" class="shrink-0 text-white">
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="12" fill="#fff" fill-opacity="0.2" />
+                                  <path
+                                    d="M7 13l3 3 7-7"
+                                    stroke="#fff"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </DisclosureButton>
+                        </RadioGroupOption>
+                      </div>
+                    </RadioGroup>
+                  </DisclosurePanel>
+                </Disclosure>
+                <Disclosure as="div" class="-mx-3 px-4 pb-4" v-slot="{ open }">
+                  <DisclosureButton
+                    class="group relative flex items-center justify-between gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 dark:hover:bg-gray-800 w-full"
+                  >
+                    <div
+                      class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-900 dark:group-hover:bg-gray-950"
+                    >
+                      <component
+                        :is="MapPinIcon"
+                        class="h-6 w-6 text-gray-600 dark:text-gray-300 group-hover:text-indigo-600"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div class="flex-auto text-left">
+                      <a class="block font-semibold text-gray-900 dark:text-white">
+                        {{ selectedChild.name }}
+                        <span class="absolute inset-0" />
+                      </a>
+                      <!-- <p class="text-gray-600 dark:text-gray-400">This is the location</p> -->
+                    </div>
+                    <div>
+                      <ChevronDownIcon
+                        :class="[
+                          open ? 'rotate-180' : '',
+                          'h-5 w-5 flex-none text-black dark:text-white'
+                        ]"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </DisclosureButton>
+                  <DisclosurePanel class="mt-2">
+                    <RadioGroup v-model="selectedChild">
+                      <RadioGroupLabel class="sr-only">Collection</RadioGroupLabel>
+                      <div class="grid grid-cols-2">
+                        <RadioGroupOption
+                          as="template"
+                          class="pl-6 pr-3 col-span-1"
+                          v-for="location in selectedLocation.children"
+                          :key="location.id"
+                          :value="location"
+                          v-slot="{ active, checked }"
+                        >
+                          <DisclosureButton
+                            as="div"
+                            :class="[
+                              active ? 'ring-2 dark:ring-indigo-600 ' : '',
+                              checked
+                                ? 'bg-sky-900/75 text-white dark:bg-gray-800 '
+                                : 'bg-white dark:bg-transparent dark:ring-white text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+                            ]"
+                            class="relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none"
+                          >
+                            <div class="flex w-full items-center justify-between">
+                              <div class="flex items-center">
+                                <div class="text-sm">
+                                  <RadioGroupLabel
+                                    as="p"
+                                    :class="
+                                      checked ? 'dark:text-white' : 'text-gray-900 dark:text-white'
+                                    "
+                                    class="font-medium"
+                                  >
+                                    {{ location.name }}
+                                  </RadioGroupLabel>
+                                  <RadioGroupDescription
+                                    as="span"
+                                    :class="checked ? '' : 'text-gray-500'"
+                                    class="inline"
+                                  >
+                                    <span> {{ location.length + ' photos' }} </span>
+                                  </RadioGroupDescription>
+                                </div>
+                              </div>
+                              <div v-show="checked" class="shrink-0 text-white">
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="12" fill="#fff" fill-opacity="0.2" />
+                                  <path
+                                    d="M7 13l3 3 7-7"
+                                    stroke="#fff"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </DisclosureButton>
+                        </RadioGroupOption>
+                      </div>
+                    </RadioGroup>
+                  </DisclosurePanel>
+                </Disclosure>
+                <div
+                  class="grid grid-cols-2 divide-x divide-gray-900/5 dark:divide-white/10 bg-gray-50 dark:bg-gray-800"
+                >
+                  <PopoverButton
+                    class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <component
-                      :is="item.icon"
+                      :is="XCircleIcon"
                       class="h-5 w-5 flex-none text-gray-400"
                       aria-hidden="true"
                     />
-                    {{ item.name }}
-                  </a>
+                    Cancel
+                  </PopoverButton>
+                  <PopoverButton
+                    @click="goToSelectedLocationAndCollection"
+                    class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <component
+                      :is="GlobeAltIcon"
+                      class="h-5 w-5 flex-none text-gray-400"
+                      aria-hidden="true"
+                    />
+                    Go
+                  </PopoverButton>
                 </div>
               </PopoverPanel>
             </transition>
@@ -154,15 +319,131 @@
                       aria-hidden="true"
                     />
                   </DisclosureButton>
-                  <DisclosurePanel class="mt-2 space-y-2">
-                    <DisclosureButton
+                  <DisclosurePanel class="mt-2 gap-x-2 grid grid-cols-2">
+                    <!-- <DisclosureButton
                       v-for="item in [...products, ...callsToAction]"
                       :key="item.name"
                       as="a"
                       :href="item.href"
                       class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                       >{{ item.name }}</DisclosureButton
-                    >
+                    > -->
+                    <RadioGroup v-model="selectedLocation">
+                      <RadioGroupLabel class="sr-only">Location</RadioGroupLabel>
+                      <div class="">
+                        <RadioGroupOption
+                          as="template"
+                          class="pl-6 pr-3 hover:cursor-pointer"
+                          v-for="location in locations"
+                          :key="location.id"
+                          :value="location"
+                          v-slot="{ active, checked }"
+                        >
+                          <div
+                            :class="[
+                              active ? 'ring-2 dark:ring-indigo-600 ' : '',
+                              checked
+                                ? 'bg-sky-900/75 text-white dark:bg-gray-800 '
+                                : 'bg-white dark:bg-transparent dark:ring-white text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+                            ]"
+                            class="mt-2 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
+                          >
+                            <div class="flex w-full items-center justify-between">
+                              <div class="flex items-center">
+                                <div class="text-sm">
+                                  <RadioGroupLabel
+                                    as="p"
+                                    :class="
+                                      checked ? 'dark:text-white' : 'text-gray-900 dark:text-white'
+                                    "
+                                    class="font-medium"
+                                  >
+                                    {{ location.name }}
+                                  </RadioGroupLabel>
+                                  <RadioGroupDescription
+                                    as="span"
+                                    :class="checked ? '' : 'text-gray-500'"
+                                    class="inline"
+                                  >
+                                    <span> {{ location.children.length + ' collections' }} </span>
+                                  </RadioGroupDescription>
+                                </div>
+                              </div>
+                              <div v-show="checked" class="shrink-0 text-white">
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="12" fill="#fff" fill-opacity="0.2" />
+                                  <path
+                                    d="M7 13l3 3 7-7"
+                                    stroke="#fff"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </RadioGroupOption>
+                      </div>
+                    </RadioGroup>
+                    <RadioGroup v-model="selectedChild">
+                      <RadioGroupLabel class="sr-only">Collection</RadioGroupLabel>
+                      <div class="">
+                        <RadioGroupOption
+                          as="template"
+                          class="pl-6 pr-3 col-span-1 hover:cursor-pointer"
+                          v-for="location in selectedLocation.children"
+                          :key="location.id"
+                          :value="location"
+                          v-slot="{ active, checked }"
+                        >
+                          <div
+                            :class="[
+                              active ? 'ring-2 dark:ring-indigo-600 ' : '',
+                              checked
+                                ? 'bg-sky-900/75 text-white dark:bg-gray-800 '
+                                : 'bg-white dark:bg-transparent dark:ring-white text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+                            ]"
+                            class="mt-2 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
+                          >
+                            <div class="flex w-full items-center justify-between">
+                              <div class="flex items-center">
+                                <div class="text-sm">
+                                  <RadioGroupLabel
+                                    as="p"
+                                    :class="
+                                      checked ? 'dark:text-white' : 'text-gray-900 dark:text-white'
+                                    "
+                                    class="font-medium"
+                                  >
+                                    {{ location.name }}
+                                  </RadioGroupLabel>
+                                  <RadioGroupDescription
+                                    as="span"
+                                    :class="checked ? '' : 'text-gray-500'"
+                                    class="inline"
+                                  >
+                                    <span> {{ location.length + ' photos' }} </span>
+                                  </RadioGroupDescription>
+                                </div>
+                              </div>
+                              <div v-show="checked" class="shrink-0 text-white">
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="12" fill="#fff" fill-opacity="0.2" />
+                                  <path
+                                    d="M7 13l3 3 7-7"
+                                    stroke="#fff"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </RadioGroupOption>
+                      </div>
+                    </RadioGroup>
                   </DisclosurePanel>
                 </Disclosure>
                 <a
@@ -197,7 +478,7 @@
       </Dialog>
     </header>
     <main>
-      <div class="mx-auto max-w-7xl py-6 px-5 lg:px-8 dark:bg-gray-950 relative">
+      <div class="mx-auto max-w-7xl pt-6 pb-8 px-5 lg:px-8 dark:bg-gray-950 relative">
         <RouterView :collection="child" :location="location.folder" :filter="filter" />
       </div>
     </main>
@@ -208,7 +489,7 @@ import DarkModeGroup from '@/components/DarkModeGroup.vue'
 import { useDark } from '@vueuse/core'
 import {} from 'vue-router'
 import locations from '@/data/LocationData'
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, watch } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -218,74 +499,65 @@ import {
   Popover,
   PopoverButton,
   PopoverGroup,
-  PopoverPanel
+  PopoverPanel,
+  RadioGroup,
+  RadioGroupLabel,
+  RadioGroupDescription,
+  RadioGroupOption
 } from '@headlessui/vue'
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
   GlobeAmericasIcon,
   GlobeAltIcon,
+  MapPinIcon,
   XCircleIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
-import { RouterView, useRoute } from 'vue-router'
+import { RouterView, useRoute, useRouter } from 'vue-router'
 
 const location = ref(null)
 const child = ref(null)
 const route = useRoute()
+const router = useRouter()
+
 const isDark = useDark()
 const filter = ref('none')
 
 const locationId = ref(Number(route.params.locationId))
 const collectionId = ref(Number(route.params.collectionId))
 
+const selectedLocation = ref(null)
+const selectedChild = ref(null)
+
 onBeforeMount(() => {
   location.value = locations.find((location) => location.id === locationId.value)
   child.value = location.value.children.find((child) => child.id === collectionId.value)
-  console.log(location.value)
-  console.log(child.value)
+  selectedLocation.value = location.value
+  selectedChild.value = child.value
 })
 
-const products = [
-  {
-    name: 'Analytics',
-    description: 'Get a better understanding of your traffic',
-    href: '#',
-    icon: GlobeAmericasIcon
-  },
-  {
-    name: 'Engagement',
-    description: 'Speak directly to your customers',
-    href: '#',
-    icon: CursorArrowRaysIcon
-  },
-  {
-    name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
-    href: '#',
-    icon: FingerPrintIcon
-  },
-  {
-    name: 'Integrations',
-    description: 'Connect with third-party tools',
-    href: '#',
-    icon: SquaresPlusIcon
-  },
-  {
-    name: 'Automations',
-    description: 'Build strategic funnels that will convert',
-    href: '#',
-    icon: ArrowPathIcon
-  }
-]
-const callsToAction = [
-  { name: 'Cancel', href: '#', icon: XCircleIcon },
-  { name: 'Go', href: '#', icon: GlobeAltIcon }
-]
-
 const mobileMenuOpen = ref(false)
+
+watch(
+  () => selectedLocation.value,
+  () => {
+    // Update selectedChild when selectedLocation changes
+    // Replace 'defaultChild' with the default child you want to select
+    selectedChild.value = selectedLocation.value.children[0]
+  }
+)
+
+const goToSelectedLocationAndCollection = () => {
+  location.value = selectedLocation.value
+  child.value = selectedChild.value
+  router.push({
+    name: 'collection',
+    params: {
+      locationId: location.value.id,
+      collectionId: child.value.id
+    }
+  })
+  console.log('goToSelectedLocationAndCollection')
+}
 </script>
