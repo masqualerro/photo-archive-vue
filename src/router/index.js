@@ -30,10 +30,14 @@ const router = createRouter({
       ]
     },
     {
-      path: '/locations'
+      path: '/locations',
+      name: 'locations',
+      component: () => import('../views/LocationsView.vue')
     },
     {
-      path: '/collections'
+      path: '/collections',
+      name: 'collections',
+      component: () => import('../views/CollectionsView.vue')
     }
   ]
 })

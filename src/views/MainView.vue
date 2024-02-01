@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full font-satoshi bg-stone-400 dark:bg-gray-950">
+  <div class="min-h-full font-satoshi">
     <header class="dark:bg-gray-950">
       <nav
         class="mx-auto flex max-w-7xl items-center justify-between p-5 lg:px-8"
@@ -69,7 +69,7 @@
                       class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white dark:bg-gray-900 dark:group-hover:bg-gray-950"
                     >
                       <component
-                        :is="GlobeAmericasIcon"
+                        :is="selectedLocation.icon"
                         class="h-6 w-6 text-gray-600 dark:text-gray-300 group-hover:text-indigo-600"
                         aria-hidden="true"
                       />
@@ -313,21 +313,13 @@
                   <DisclosureButton
                     class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                   >
-                    Portugal <span aria-hidden="true">&rarr;</span> Obidos
+                    {{ location.name }} <span aria-hidden="true">&rarr;</span> {{ child.name }}
                     <ChevronDownIcon
                       :class="[open ? 'rotate-180' : '', 'h-5 w-5 flex-none']"
                       aria-hidden="true"
                     />
                   </DisclosureButton>
                   <DisclosurePanel class="mt-2 gap-x-2 grid grid-cols-2">
-                    <!-- <DisclosureButton
-                      v-for="item in [...products, ...callsToAction]"
-                      :key="item.name"
-                      as="a"
-                      :href="item.href"
-                      class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
-                      >{{ item.name }}</DisclosureButton
-                    > -->
                     <RadioGroup v-model="selectedLocation">
                       <RadioGroupLabel class="sr-only">Location</RadioGroupLabel>
                       <div class="">
@@ -489,7 +481,7 @@ import DarkModeGroup from '@/components/DarkModeGroup.vue'
 import { useDark } from '@vueuse/core'
 import {} from 'vue-router'
 import locations from '@/data/LocationData'
-import { ref, onBeforeMount, watch } from 'vue'
+import { ref, onBeforeMount, watch, nextTick } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -508,7 +500,6 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
-  GlobeAmericasIcon,
   GlobeAltIcon,
   MapPinIcon,
   XCircleIcon
@@ -527,6 +518,7 @@ const filter = ref('none')
 const locationId = ref(Number(route.params.locationId))
 const collectionId = ref(Number(route.params.collectionId))
 
+const isInitialMount = ref(true)
 const selectedLocation = ref(null)
 const selectedChild = ref(null)
 
@@ -535,6 +527,10 @@ onBeforeMount(() => {
   child.value = location.value.children.find((child) => child.id === collectionId.value)
   selectedLocation.value = location.value
   selectedChild.value = child.value
+
+  nextTick(() => {
+    isInitialMount.value = false
+  })
 })
 
 const mobileMenuOpen = ref(false)
@@ -542,10 +538,12 @@ const mobileMenuOpen = ref(false)
 watch(
   () => selectedLocation.value,
   () => {
-    // Update selectedChild when selectedLocation changes
-    // Replace 'defaultChild' with the default child you want to select
-    selectedChild.value = selectedLocation.value.children[0]
-  }
+    if (!isInitialMount.value) {
+      console.log('triggered watcher')
+      selectedChild.value = selectedLocation.value.children[0]
+    }
+  },
+  { immediate: false }
 )
 
 const goToSelectedLocationAndCollection = () => {
@@ -558,6 +556,5 @@ const goToSelectedLocationAndCollection = () => {
       collectionId: child.value.id
     }
   })
-  console.log('goToSelectedLocationAndCollection')
 }
 </script>

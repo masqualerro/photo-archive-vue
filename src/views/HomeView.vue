@@ -1,11 +1,11 @@
 <template>
   <div
-    class="bg-stone-300 dark:bg-gray-950 mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:pb-0 lg:pt-0 lg:flex lg:px-8 min-h-screen items-center font-satoshi"
+    class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:pb-0 lg:pt-0 lg:flex lg:px-8 min-h-screen items-center font-satoshi"
   >
     <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
       <img v-if="isDark" class="h-12" src="/glyph.svg" alt="Your Company" />
       <img v-else class="h-12" src="/glyph-light.svg" alt="Your Company" />
-      <div class="mt-24 sm:mt-32 lg:mt-16">
+      <div class="mt-8 lg:mt-16">
         <a href="#" class="inline-flex space-x-6">
           <span
             class="rounded-full bg-stone-900/10 dark:bg-indigo-500/10 px-3 py-1 text-xs font-semibold leading-6 text-stone-800 dark:text-indigo-400 ring-1 ring-inset ring-stone-900/20 dark:ring-indigo-500/20"
@@ -28,12 +28,16 @@
           </span>
         </a>
       </div>
-      <h1 class="mt-10 text-4xl font-regular tracking-tight dark:text-white sm:text-8xl">
-        Miguel <br />
+      <h1 class="mt-10 text-5xl font-regular tracking-tight dark:text-white sm:text-8xl">
+        Miguel <br class="hidden lg:block" />
         Sedillo
       </h1>
-      <ArrowDownRightIcon class="h-10 w-10 text-stone-800 dark:text-indigo-400 mt-4" />
-      <p class="mt-6 text-lg leading-8 text-gray-800 dark:text-gray-300">Photographic Archive</p>
+      <ArrowDownRightIcon
+        class="h-10 w-10 text-stone-800 dark:text-indigo-400 mt-4 hidden lg:block"
+      />
+      <p class="mt-4 lg:mt-6 text-lg leading-8 text-gray-800 dark:text-gray-300">
+        Photographic Archive
+      </p>
       <div class="mt-10 flex justify-between">
         <div class="flex items-center gap-x-6">
           <a
@@ -52,7 +56,7 @@
     </div>
     <ul
       role="list"
-      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full mt-16 sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 xl:ml-24 max-w-2xl lg:max-w-none mx-auto lg:pt-8"
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full mt-10 sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 xl:ml-24 max-w-2xl lg:max-w-none mx-auto lg:pt-8"
     >
       <li v-for="image in images" :key="image.id" class="relative hover:cursor-pointer">
         <div

@@ -137,7 +137,6 @@ export default {
         left: slideIndex * (slideWidth.value + slideMargin.value),
         behavior: 'smooth'
       })
-      console.log('scrollToSlide')
     }
 
     const currentSlide = computed(() => {
@@ -157,6 +156,9 @@ export default {
     }
 
     const goToPreviousSlide = () => {
+      if (currentSlide.value > data.value.length) {
+        currentSlide.value = data.value.length
+      }
       scrollToSlide(currentSlide.value - 1)
     }
 
@@ -184,6 +186,22 @@ export default {
       },
       { immediate: true }
     )
+
+    let previousSlide = ref(0)
+
+    watch(currentSlide, (newValue) => {
+      previousSlide.value = newValue
+    })
+
+    watch(scrolledToEndOfSlider, (newValue) => {
+      if (newValue && previousSlide.value === currentSlide.value) {
+        sliderPosition.value = (previousSlide.value + 1) * (slideWidth.value + slideMargin.value)
+      }
+    })
+
+    watch(currentSlide, (newValue) => {
+      previousSlide.value = newValue
+    })
 
     return {
       sliderRef,
