@@ -7,7 +7,7 @@ const isDark = useDark()
 
 <!-- #E9DFDE -->
 <template>
-  <div :class="{ dark: isDark }" class="dark:bg-gray-950 bg-[#E8DCE0] min-h-screen">
+  <div :class="{ dark: isDark }" class="dark:bg-gray-950 bg-pink min-h-screen font-satoshi">
     <RouterView />
   </div>
 </template>

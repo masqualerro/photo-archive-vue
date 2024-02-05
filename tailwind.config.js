@@ -8,7 +8,9 @@ export default {
         satoshi: ['"Satoshi"', 'sans-serif']
       },
       colors: {
-        tan: '#F2ECEB'
+        tan: '#F2ECEB',
+        pink: '#E8DCE0',
+        'pink-saturated': '#eed6de'
       }
     }
   },
