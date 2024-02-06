@@ -3,120 +3,160 @@
     "id": 1,
     "title": "Excursions",
     "folder": "excursions",
-    "length": 7
+    "length": 7,
+    "description": "A collection of photos from various excursions in Italy.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 2,
     "title": "Florence",
     "folder": "florence",
-    "length": 5
+    "length": 5,
+    "description": "A collection of photos from Florence, Italy - around the Uffizi Gallery.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 3,
     "title": "Pompeii",
     "folder": "pompeii",
-    "length": 5
+    "length": 5,
+    "description": "A collection of photos from Pompeii, Italy.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 4,
     "title": "Positano",
     "folder": "positano",
-    "length": 7
+    "length": 7,
+    "description": "A half hour in Positano, Italy, before the last ferry left.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 5,
     "title": "Roma",
     "folder": "roma",
-    "length": 7
+    "length": 7,
+    "description": "Summer excursions in Rome, Italy.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 6,
     "title": "Ruins",
     "folder": "ruins",
-    "length": 5
+    "length": 5,
+    "description": "A collection of photos from various ruins in Italy.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 7,
     "title": "Sorrento",
     "folder": "sorrento",
-    "length": 11
+    "length": 11,
+    "description": "A collection of photos from my weekend trip to Sorrento, Italy.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 8,
     "title": "Vatican City",
     "folder": "vaticancity",
-    "length": 5
+    "length": 5,
+    "description": "Vatican city interiors and exteriors.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 9,
     "title": "Canal",
     "folder": "canal",
-    "length": 5
+    "length": 5,
+    "description": "Photos from a walk along the Thames River in London.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 10,
     "title": "Interiors",
     "folder": "interiors",
-    "length": 8
+    "length": 8,
+    "description": "Photos from interiors in London.",
+    "cameras": ["Canon A1, Olympus MJU II"]
   },
   {
     "id": 11,
     "title": "Kew Gardens",
     "folder": "kewgardens",
-    "length": 13
+    "length": 13,
+    "description": "Photos from Kew Gardens in London.",
+    "cameras": ["Canon A1, Olympus MJU II"]
   },
   {
     "id": 12,
     "title": "London",
     "folder": "london",
-    "length": 7
+    "length": 7,
+    "description": "Photos from walks in London proper.",
+    "cameras": ["Canon A1, Olympus MJU II"]
   },
   {
     "id": 13,
     "title": "Greenhouse",
     "folder": "greenhouse",
-    "length": 8
+    "length": 8,
+    "description": "Photos a date at the university greenhouse at dusk.",
+    "cameras": ["Pentax K1000, Olympus MJU II"]
   },
   {
     "id": 14,
     "title": "Mendocino",
     "folder": "mendo",
-    "length": 8
+    "length": 8,
+    "description": "Photos from a family trip to Mendocino, California.",
+    "cameras": ["Pentax K1000, Olympus MJU II"]
   },
   {
     "id": 15,
     "title": "Warehouse",
     "folder": "warehouse",
-    "length": 9
+    "length": 9,
+    "description": "Building a record crate with my sister and my father.",
+    "cameras": ["Pentax K1000, Olympus MJU II"]
   },
   {
     "id": 16,
     "title": "Bom Jesus",
     "folder": "bomjesus",
-    "length": 4
+    "length": 4,
+    "description": "A collection of photos from Bom Jesus, Portugal.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 17,
     "title": "Coimbra",
     "folder": "coimbra",
-    "length": 5
+    "length": 5,
+    "description": "A collection of photos from Coimbra, Portugal and surrounding areas.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 18,
     "title": "Lisboa",
     "folder": "lisboa",
-    "length": 7
+    "length": 7,
+    "description": "The start of my Portugal trip, in Lisbon.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 19,
     "title": "Obidos",
     "folder": "obidos",
-    "length": 6
+    "length": 6,
+    "description": "Walks along the castle walls in Obidos, Portugal.",
+    "cameras": ["Canon A1"]
   },
   {
     "id": 20,
     "title": "Porto",
     "folder": "porto",
-    "length": 6
+    "length": 6,
+    "description": "Solitary excursions through Porto, Portugal.",
+    "cameras": ["Canon A1"]
   }
 ]

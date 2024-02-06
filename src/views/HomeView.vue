@@ -100,19 +100,6 @@
     </div>
   </div>
 </template>
-<style scoped>
-@keyframes elastic {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.08);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-</style>
 <script>
 import { ArrowDownRightIcon } from '@heroicons/vue/24/outline'
 import { useDark } from '@vueuse/core'

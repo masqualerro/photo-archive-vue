@@ -78,6 +78,7 @@
 import CollectionData from '@/data/CollectionData.json'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/24/outline'
 import { ref, computed, watch, toRefs, onMounted, onUnmounted } from 'vue'
+import locations from '@/data/LocationData'
 
 export default {
   name: 'CollectionDisplay',
@@ -223,6 +224,43 @@ export default {
       handleScroll,
       data,
       isShowing
+    }
+  },
+  methods: {
+    setMetaTags(locationId, collectionId) {
+      const location = locations.find((loc) => loc.id === parseInt(locationId))
+      const collection = location.children.find((col) => col.id === parseInt(collectionId))
+      if (collection) {
+        document.title = collection.name
+        let metaDescription = document.querySelector('meta[name="description"]')
+        if (metaDescription) {
+          metaDescription.setAttribute('content', collection.description)
+        } else {
+          let metaDescription = document.createElement('meta')
+          metaDescription.name = 'description'
+          metaDescription.content = collection.description
+          document.getElementsByTagName('head')[0].appendChild(metaDescription)
+        }
+        let metaKeywords = document.querySelector('meta[name="keywords"]')
+        if (metaKeywords) {
+          metaKeywords.remove()
+        }
+        let cameraKeywords = collection.cameras.join(', ')
+        metaKeywords = document.createElement('meta')
+        metaKeywords.name = 'keywords'
+        metaKeywords.content = `${cameraKeywords}, Miguel Sedillo, Photography, ${collection.name}, Film Photography, ${location.name}, ${location.name} ${collection.name}, ${location.name} Photography, ${location.name} Film Photography, ${collection.name} Photography, ${collection.name} Film Photography`
+        document.getElementsByTagName('head')[0].appendChild(metaKeywords)
+      } else {
+        this.$router.push({ name: 'collections' })
+      }
+    }
+  },
+  watch: {
+    '$route.params': {
+      immediate: true,
+      handler(to) {
+        this.setMetaTags(to.locationId, to.collectionId)
+      }
     }
   }
 }
