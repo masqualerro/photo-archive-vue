@@ -23,12 +23,12 @@
                   style="will-change: transform"
                   class="h-full relative w-[350px] sm:w-[384px] flex flex-col justify-between items-center"
                 >
-                  <img
+                  <!-- <img
                     :style="{ filter: filter, willChange: 'filter' }"
                     :src="image.src"
                     :alt="image.alt"
                     class="object-cover w-[350px] h-[517.8571428571429px] sm:w-[384px] sm:h-[568.1632653061224px] transition-filter duration-300 ease-in-out"
-                  />
+                  /> -->
                   <picture>
                     <source :srcset="image.srcWebp" type="image/webp" />
                     <img
