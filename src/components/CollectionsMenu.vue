@@ -13,17 +13,13 @@
         >
           {{ image.name }}
         </p>
-        <li
+        <img
           @click="goToCollection(image.locationId, image.collectionId)"
-          class="relative group-hover:cursor-pointer aspect-h-1 aspect-w-1 w-full flex items-center justify-center"
-        >
-          <img
-            :style="{ filter: filter, willChange: 'filter, transform' }"
-            :src="image.src"
-            alt=""
-            class="object-cover transition-all duration-300 ease-in-out group-hover:grayscale group-hover:scale-105 group-hover:opacity-55 overflow-hidden rounded-full"
-          />
-        </li>
+          :style="{ filter: filter, willChange: 'filter, transform' }"
+          :src="image.src"
+          alt=""
+          class="hover:cursor-pointer transition-all ease-in-out duration-300 group-hover:grayscale group-hover:scale-105 group-hover:opacity-55 rounded-full"
+        />
       </div>
     </ul>
   </div>
@@ -61,7 +57,7 @@ export default {
       for (const child of location.children) {
         this.images.push({
           id: idCounter,
-          src: `/assets/${location.folder}/${child.folder}/${1}.jpg`,
+          src: `/assets/${location.folder}/${child.folder}/thumb.png`,
           alt: `${child.name} ${location.name}`,
           locationId: location.id,
           collectionId: child.id,

@@ -80,24 +80,24 @@
         <DarkModeGroup />
       </div>
     </div>
-    <ul
-      role="list"
+    <div
       class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full mt-10 sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 xl:ml-24 max-w-2xl lg:max-w-none mx-auto lg:pt-8"
     >
-      <li v-for="image in images" :key="image.id" class="relative hover:cursor-pointer">
-        <div
-          id="circle"
-          class="aspect-h-1 aspect-w-1 block w-full overflow-hidden rounded-full transition-transform duration-300 hover:scale-105"
+      <div class="relative group rounded-full" v-for="image in images" :key="image.id">
+        <p
+          class="whitespace-nowrap pointer-events-none text-4xl italic font-black text-red-500 dark:text-white text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
         >
-          <img
-            :style="{ filter: filter, willChange: 'filter, transform' }"
-            :src="image.src"
-            alt=""
-            class="object-cover transition-filter duration-300 hover:grayscale"
-          />
-        </div>
-      </li>
-    </ul>
+          {{ image.name }}
+        </p>
+        <img
+          @click="goToCollection(image.locationId, image.collectionId)"
+          :style="{ filter: filter, willChange: 'filter, transform' }"
+          :src="image.src"
+          :alt="image.alt"
+          class="hover:cursor-pointer transition-all ease-in-out duration-300 group-hover:grayscale group-hover:scale-105 group-hover:opacity-55 rounded-full"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -120,42 +120,13 @@ import DarkModeGroup from '@/components/DarkModeGroup.vue'
 import { RouterLink } from 'vue-router'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import { ref } from 'vue'
+import locations from '@/data/LocationData'
+
 export default {
   name: 'HomeView',
   data() {
     return {
-      images: [
-        {
-          id: 1,
-          src: '/assets/italy/sorrento/0.jpg',
-          alt: 'A beautiful landscape'
-        },
-        {
-          id: 2,
-          src: '/assets/italy/positano/0.jpg',
-          alt: 'A beautiful landscape'
-        },
-        {
-          id: 3,
-          src: '/assets/italy/florence/0.jpg',
-          alt: 'A beautiful landscape'
-        },
-        {
-          id: 4,
-          src: '/assets/portugal/lisboa/0.jpg',
-          alt: 'A beautiful landscape'
-        },
-        {
-          id: 5,
-          src: '/assets/portugal/obidos/1.jpg',
-          alt: 'A beautiful landscape'
-        },
-        {
-          id: 6,
-          src: '/assets/us/mendo/0.jpg',
-          alt: 'A beautiful landscape'
-        }
-      ]
+      images: []
     }
   },
   components: {
@@ -171,6 +142,40 @@ export default {
     const filter = ref('none')
     const plan = ref('startup')
     return { isDark, filter, plan }
+  },
+  methods: {
+    goToCollection(locationId, collectionId) {
+      this.$router.push({
+        name: 'collection',
+        params: {
+          locationId: locationId,
+          collectionId: collectionId
+        }
+      })
+    }
+  },
+  created() {
+    let idCounter = 0
+    let tempImages = []
+    for (const location of locations) {
+      for (const child of location.children) {
+        tempImages.push({
+          id: idCounter,
+          src: `/assets/${location.folder}/${child.folder}/thumb.png`,
+          alt: `${child.name} ${location.name}`,
+          locationId: location.id,
+          collectionId: child.id,
+          name: child.name
+        })
+        idCounter++
+      }
+    }
+
+    for (let i = 0; i < 6; i++) {
+      const j = Math.floor(Math.random() * tempImages.length)
+      this.images.push(tempImages[j])
+      tempImages.splice(j, 1)
+    }
   }
 }
 </script>

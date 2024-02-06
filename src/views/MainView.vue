@@ -14,10 +14,11 @@
             </RouterLink>
           </a>
           <div class="items-center justify-center hidden lg:flex">
+            <label class="sr-only" for="filter">Filter</label>
             <select
               v-model="filter"
-              id="location"
-              name="location"
+              id="filter"
+              name="filter"
               class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-800 dark:focus:ring-indigo-500 [&_*]:text-black"
             >
               <option value="none">Standard</option>
@@ -486,15 +487,16 @@
                     </RadioGroup>
                   </DisclosurePanel>
                 </Disclosure>
-                <a
+                <!-- <a
                   href="#"
                   class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                   >Locations</a
-                >
-                <a
-                  href="#"
+                > -->
+                <RouterLink
+                  :to="{ path: '/main/collections' }"
+                  @click="mobileMenuOpen = false"
                   class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
-                  >Collections</a
+                  >Collections</RouterLink
                 >
               </div>
               <div class="py-6 flex justify-between items-center">
@@ -640,6 +642,7 @@ const goToSelectedLocationAndCollection = () => {
       collectionId: child.value.id
     }
   })
+  mobileMenuOpen.value = false
 }
 
 const routeProps = computed(() => {

@@ -5,14 +5,14 @@
         {{ collection.name }}
       </h1>
     </div>
-    <div class="relative h-[557.844px] sm:h-[620px]">
+    <div class="relative h-[557.8571428571429px] sm:h-[608.1632653061224px]">
       <div class="absolute w-full">
-        <div class="mt-5 h-[517.844px] sm:h-[580px]">
-          <div class="overflow-hidden h-[517.844px] sm:h-[580px] relative">
+        <div class="mt-5 h-[517.8571428571429px] sm:h-[568.1632653061224px]">
+          <div class="overflow-hidden h-[517.8571428571429px] sm:h-[568.1632653061224px] relative">
             <ul
               ref="sliderRef"
               @scroll="handleScroll"
-              class="flex overflow-x-auto snap-x snap-mandatory h-[557.844px] sm:h-[620px]"
+              class="flex overflow-x-auto snap-x snap-mandatory h-[557.8571428571429px] sm:h-[608.1632653061224px]"
             >
               <li
                 v-for="image in data"
@@ -27,8 +27,17 @@
                     :style="{ filter: filter, willChange: 'filter' }"
                     :src="image.src"
                     :alt="image.alt"
-                    class="object-cover w-[350px] h-[517.844px] sm:w-[384px] sm:h-[580px] transition-filter duration-300 ease-in-out"
+                    class="object-cover w-[350px] h-[517.8571428571429px] sm:w-[384px] sm:h-[568.1632653061224px] transition-filter duration-300 ease-in-out"
                   />
+                  <picture>
+                    <source :srcset="image.srcWebp" type="image/webp" />
+                    <img
+                      :style="{ filter: filter, willChange: 'filter' }"
+                      :src="image.src"
+                      :alt="image.alt"
+                      class="object-cover w-[350px] h-[517.8571428571429px] sm:w-[384px] sm:h-[568.1632653061224px] transition-filter duration-300 ease-in-out"
+                    />
+                  </picture>
                 </div>
               </li>
             </ul>
@@ -175,6 +184,7 @@ export default {
           data.value.push({
             id: i,
             src: `/assets/${location.value}/${collectionData.folder}/${i}.jpg`,
+            srcWebp: `/assets/${location.value}/${collectionData.folder}/${i}.webp`,
             alt: `${collectionData.title} ${i}`
           })
         }

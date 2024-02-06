@@ -1,6 +1,8 @@
 <template>
   <div class="flex items-center gap-x-3">
     <button
+      name="Disable Dark Mode"
+      aria-label="Disable Dark Mode"
       @click="disableDarkMode"
       :class="isDark ? '' : 'rounded-full p-1 bg-stone-900/20 bg-opacity-20'"
       class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"
@@ -12,6 +14,8 @@
     </button>
 
     <button
+      name="Enable Dark Mode"
+      aria-label="Enable Dark Mode"
       @click="enableDarkMode"
       :class="isDark ? 'rounded-full p-1 bg-white/20 ' : ''"
       class="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out"

@@ -141,13 +141,13 @@ const locations = [
         id: 4,
         name: 'Coimbra',
         folder: 'coimbra',
-        length: 4
+        length: 5
       },
       {
         id: 5,
         name: 'Bom Jesus',
         folder: 'bomjesus',
-        length: 6
+        length: 4
       }
     ],
     icon: GlobeEuropeAfricaIcon
