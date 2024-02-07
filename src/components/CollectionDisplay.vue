@@ -23,12 +23,6 @@
                   style="will-change: transform"
                   class="h-full relative w-[350px] sm:w-[384px] flex flex-col justify-between items-center"
                 >
-                  <!-- <img
-                    :style="{ filter: filter, willChange: 'filter' }"
-                    :src="image.src"
-                    :alt="image.alt"
-                    class="object-cover w-[350px] h-[517.8571428571429px] sm:w-[384px] sm:h-[568.1632653061224px] transition-filter duration-300 ease-in-out"
-                  /> -->
                   <picture>
                     <source :srcset="image.srcWebp" type="image/webp" />
                     <img
@@ -44,7 +38,10 @@
           </div>
         </div>
       </div>
-      <div class="flex items-end justify-center mt-6 absolute bottom-[-25px] w-full">
+      <div
+        v-if="!isMobile"
+        class="flex items-end justify-center mt-6 absolute bottom-[-25px] w-full"
+      >
         <button
           @click="goToPreviousSlide"
           class="disabled:cursor-not-allowed hover:scale-105 hover:bg-opacity-50 transition-all ease-in-out bg-gray bg-opacity-20 w-10 h-10 rounded-full flex items-center justify-center"
@@ -69,6 +66,13 @@
             aria-hidden="true"
           />
         </button>
+      </div>
+      <div v-else>
+        <p
+          class="text-xs dark:text-white flex items-end justify-center absolute bottom-[-15px] w-full"
+        >
+          Swipe to navigate
+        </p>
       </div>
     </div>
   </div>
@@ -98,6 +102,11 @@ export default {
     filter: {
       type: String,
       required: true
+    }
+  },
+  data() {
+    return {
+      isMobile: /Mobi|Android|iPhone|iPad|Tablet|Kindle/.test(navigator.userAgent)
     }
   },
   setup(props) {
@@ -202,16 +211,14 @@ export default {
 
     watch(currentSlide, (newValue) => {
       previousSlide.value = newValue
+      console.log('currentSlide', newValue, previousSlide.value)
     })
 
     watch(scrolledToEndOfSlider, (newValue) => {
       if (newValue && previousSlide.value === currentSlide.value) {
         sliderPosition.value = (previousSlide.value + 1) * (slideWidth.value + slideMargin.value)
       }
-    })
-
-    watch(currentSlide, (newValue) => {
-      previousSlide.value = newValue
+      console.log('scrolledToEndOfSlider', previousSlide, newValue)
     })
 
     return {
