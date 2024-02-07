@@ -13,13 +13,13 @@
               <img v-else class="h-8 w-auto" src="/glyph-light.svg" alt="Dark Star Glyph" />
             </RouterLink>
           </a>
-          <div class="items-center justify-center hidden lg:flex">
+          <div class="items-center justify-center flex">
             <label class="sr-only" for="filter">Filter</label>
             <select
               v-model="filter"
               id="filter"
               name="filter"
-              class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-800 dark:focus:ring-indigo-500 [&_*]:text-black"
+              class="text-sm lg:text-sm block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-white dark:ring-gray-800 dark:focus:ring-indigo-500 [&_*]:text-black"
             >
               <option value="none">Standard</option>
               <option value="grayscale(100%)">Grayscale</option>
@@ -319,7 +319,7 @@
                 <img v-else class="h-8 w-auto" src="/glyph-light.svg" alt="Dark Star Glyph" />
               </RouterLink>
             </a>
-            <button
+            <!-- <button
               @click="goToSelectedLocationAndCollection"
               class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
@@ -329,7 +329,7 @@
                 aria-hidden="true"
               />
               Go
-            </button>
+            </button> -->
             <button
               type="button"
               class="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-400"
@@ -423,6 +423,7 @@
                       <RadioGroupLabel class="sr-only">Collection</RadioGroupLabel>
                       <div class="">
                         <RadioGroupOption
+                          @click="goToSelectedLocationAndCollection"
                           as="template"
                           class="pl-6 pr-3 col-span-1 hover:cursor-pointer"
                           v-for="location in selectedLocation.children"
