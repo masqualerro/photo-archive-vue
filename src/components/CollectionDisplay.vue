@@ -79,7 +79,6 @@
       v-else
       class="h-[557.8571428571429px] sm:h-[608.1632653061224px] flex items-center justify-center"
     >
-      <p>Loading</p>
       <img
         v-if="isDark"
         class="animate-bounce h-8 w-auto"
