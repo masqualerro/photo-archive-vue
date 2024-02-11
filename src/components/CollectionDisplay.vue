@@ -1,7 +1,7 @@
 <template>
   <div class="font-satoshi">
     <div class="flex justify-between items-end">
-      <h1 class="dark:text-white text-6xl ml-0 pl-0">
+      <h1 class="dark:text-white text-5xl ml-0 pl-0">
         {{ collection.name }}
       </h1>
     </div>

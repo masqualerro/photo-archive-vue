@@ -523,7 +523,7 @@
       </Dialog>
     </header>
     <main>
-      <div class="mx-auto max-w-7xl pt-6 pb-8 px-5 lg:px-8 dark:bg-gray-950 relative">
+      <div class="mx-auto max-w-7xl pt-4 pb-8 px-5 lg:px-8 dark:bg-gray-950 relative">
         <RouterView v-bind="routeProps" />
       </div>
     </main>
