@@ -5,7 +5,7 @@
         {{ collection.name }}
       </h1>
     </div>
-    <div class="relative h-[557.8571428571429px] sm:h-[608.1632653061224px]">
+    <div v-if="!loading" class="relative h-[557.8571428571429px] sm:h-[608.1632653061224px]">
       <div class="absolute w-full">
         <div class="mt-5 h-[517.8571428571429px] sm:h-[568.1632653061224px]">
           <div class="overflow-hidden h-[517.8571428571429px] sm:h-[568.1632653061224px] relative">
@@ -75,6 +75,19 @@
         </p>
       </div>
     </div>
+    <div
+      v-else
+      class="h-[557.8571428571429px] sm:h-[608.1632653061224px] flex items-center justify-center"
+    >
+      <p>Loading</p>
+      <img
+        v-if="isDark"
+        class="animate-bounce h-8 w-auto"
+        src="/glyph.svg"
+        alt="White Star Glyph"
+      />
+      <img v-else class="animate-bounce h-8 w-auto" src="/glyph-light.svg" alt="Dark Star Glyph" />
+    </div>
   </div>
 </template>
 <style scoped></style>
@@ -83,6 +96,7 @@ import CollectionData from '@/data/CollectionData.json'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/24/outline'
 import { ref, computed, watch, toRefs, onMounted, onUnmounted } from 'vue'
 import locations from '@/data/LocationData'
+import { useDark } from '@vueuse/core'
 
 export default {
   name: 'CollectionDisplay',
@@ -110,6 +124,8 @@ export default {
     }
   },
   setup(props) {
+    const isDark = useDark()
+    const loading = ref(true)
     const data = ref([])
     const { collection, location } = toRefs(props)
 
@@ -186,14 +202,24 @@ export default {
     watch(
       collection,
       () => {
+        loading.value = true
         data.value = []
         const collectionData = CollectionData.find(
           (collectionItem) => collectionItem.title === collection.value.name
         )
+        let loadCounter = 0
         for (let i = 0; i < collectionData.length; i++) {
+          const img = new Image()
+          img.onload = () => {
+            loadCounter++
+            if (loadCounter === collectionData.length) {
+              loading.value = false
+            }
+          }
+          img.src = `/assets/${location.value}/${collectionData.folder}/${i}.jpg`
           data.value.push({
             id: i,
-            src: `/assets/${location.value}/${collectionData.folder}/${i}.jpg`,
+            src: img.src,
             srcWebp: `/assets/${location.value}/${collectionData.folder}/${i}.webp`,
             alt: `${collectionData.title} ${i}`
           })
@@ -230,7 +256,9 @@ export default {
       goToPreviousSlide,
       handleScroll,
       data,
-      isShowing
+      isShowing,
+      loading,
+      isDark
     }
   },
   methods: {
