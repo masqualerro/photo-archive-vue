@@ -20,7 +20,6 @@
                 class="snap-start snap-always mr-4 sm:mr-6 last:mr-0"
               >
                 <div
-                  style="will-change: transform"
                   class="h-full relative w-[350px] sm:w-[384px] flex flex-col justify-between items-center"
                 >
                   <picture>
@@ -89,7 +88,11 @@
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.slide {
+  transition: transform 0.1s ease-out;
+}
+</style>
 <script>
 import CollectionData from '@/data/CollectionData.json'
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/24/outline'
@@ -118,11 +121,10 @@ export default {
     }
   },
   data() {
-    return {
-      isMobile: /Mobi|Android|iPhone|iPad|Tablet|Kindle/.test(navigator.userAgent)
-    }
+    return {}
   },
   setup(props) {
+    const isMobile = window.screen.width <= 760
     const isDark = useDark()
     const loading = ref(true)
     const data = ref([])
@@ -257,7 +259,8 @@ export default {
       data,
       isShowing,
       loading,
-      isDark
+      isDark,
+      isMobile
     }
   },
   methods: {
