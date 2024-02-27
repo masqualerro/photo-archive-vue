@@ -609,7 +609,6 @@ watch(
   () => selectedLocation.value,
   () => {
     if (!isInitialMount.value) {
-      console.log('triggered watcher')
       selectedChild.value = selectedLocation.value.children[0]
     }
   },

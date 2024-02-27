@@ -238,14 +238,12 @@ export default {
 
     watch(currentSlide, (newValue) => {
       previousSlide.value = newValue
-      console.log('currentSlide', newValue, previousSlide.value)
     })
 
     watch(scrolledToEndOfSlider, (newValue) => {
       if (newValue && previousSlide.value === currentSlide.value) {
         sliderPosition.value = (previousSlide.value + 1) * (slideWidth.value + slideMargin.value)
       }
-      console.log('scrolledToEndOfSlider', previousSlide, newValue)
     })
 
     return {
